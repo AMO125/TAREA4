@@ -1,3 +1,5 @@
+# Clase de los libros
+
 class Book:
     def __init__(self, *params):
         # Constructor por omisión
@@ -92,6 +94,11 @@ class Book:
         """
         return self.__titulo, self.__autor, self.__editorial, self.__anio
 
+    def __str__(self):
+        """"
+        """
+        print(self.__titulo, self.__autor, self.__editorial, self.__anio)
+
     def __hash__(self) -> int:
         """
         Método que internamente llama la función hash() para obtener el valor hash del objeto.
@@ -109,3 +116,37 @@ class Book:
         """
         if isinstance(otro, Book):
             return self.__llave() == otro.__llave()
+
+    def __gt__titulo(self, otro) -> bool:
+        """
+        Este método se utiliza para dos libros y determinar si
+        el primero es "mayor" que el segundo en cuanto a su título.
+        :param otro: El libro con la que se va a realizar la comparación
+        :return: True si el libro actual es mayor que otro, False en caso contrario
+        :rtype: bool
+        """
+        if isinstance(otro, Book):
+            return self.titulo > otro.titulo
+
+    def __gt__autor(self, otro) -> bool:
+        """
+        Este método se utiliza para dos libros y determinar si
+        el primero es "mayor" que el segundo en cuanto a su autor.
+        :param otro: El libro con la que se va a realizar la comparación
+        :return: True si el libro actual es mayor que otro, False en caso contrario
+        :rtype: bool
+        """
+        if isinstance(otro, Book):
+            return self.autor > otro.autor
+
+    def __gt__editorial(self, otro) -> bool:
+        """
+        Este método se utiliza para dos libros y determinar si
+        el primero es "mayor" que el segundo en cuanto a su editorial.
+        :param otro: El libro con la que se va a realizar la comparación
+        :return: True si el libro actual es mayor que otro, False en caso contrario
+        :rtype: bool
+        """
+        if isinstance(otro, Book):
+            return self.editorial > otro.editorial
+
