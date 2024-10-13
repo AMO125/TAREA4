@@ -1,3 +1,7 @@
+from typing import TypeVar
+
+T = TypeVar('T')
+
 class Nodo:
     def __init__(self, *params):
         """
