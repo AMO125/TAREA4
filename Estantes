@@ -1,0 +1,156 @@
+def apilar_Archivo(Pila: Pila, archivo_csv):
+    try:
+        with open(archivo_csv, newline='', encoding='utf-8') as csvfile:
+            lector = csv.reader(csvfile)
+            next(lector)
+            for fila in lector:
+                libro=crearLibro(fila)
+                if libro is not None:
+                    Pila.push(libro)
+                    print(f"Libro agregado:")
+    except FileNotFoundError:
+        print(f"Error, no se encontró el archivo: {archivo_csv}")
+
+def mostrar_librosPila(Pila: Pila):
+    it1=iter(Pila)
+    while True:
+        try:
+            next(Pila)
+            print(next(it1))
+        except StopIteration:
+            pass
+def mostrar_librosLista(Lista: Lista):
+    it1=iter(Lista)
+    while True:
+        try:
+            next(it1)
+            print(next(it1))
+        except StopIteration:
+            pass
+
+
+
+if __name__=="__main__":
+    Repisa1=Pila()
+    Repisa2=Pila()
+    RepisaOrdenada = None
+    volver_al_menu = 's'
+    while volver_al_menu.lower() == 's':
+        # Mostramos las opciones del menu usando rich
+        console = Console()
+
+        table = Table(title="Menú de la biblioteca R2-Dato")
+        table.add_column("Opción", style="cyan")
+        table.add_column("Descripción")
+
+        table.add_row("1", "Agregar libros a la primer repisa.")
+        table.add_row("2", "Agregar libros a la segunda repisa.")
+        table.add_row("3", "Conocer la cantidad de ejemplares de un libro que hay en el la biblioteca.")
+        table.add_row("4", "Guardar repisa ordenada en un archivo.")
+        table.add_row("5", "Listar todos los libros de la biblioteca (sin orden particular).")
+        table.add_row("6", "Mostrar los datos de un libro.")
+        table.add_row("7", "Reacomodar y listar todos los libros existentes por orden alfabético "
+                                "de título.")
+        table.add_row("8", "Reacomodar y listar todos los libros existentes en el inventario por orden alfabético de "
+                                "autor.")
+        table.add_row("9", "Reacomodar y listar todos los libros existentes en el inventario por orden alfabético de "
+                                "editorial.")
+        table.add_row("10", "Vaciar la biblioteca.")
+        table.add_row("11", "Verificar si un libro se encuentra disponible en la biblioteca.")
+        table.add_row("12", "Verificar la cantidad de libros en el inventario.")
+        table.add_row("13", "Verificar si la biblioteca está vacía.")
+
+        table.add_row("14", "Salir.")
+
+        console.print(Panel(table, title="Menú"))
+
+        opcion = input("Elige una opción: ")
+
+        # Validar la opción
+        opciones_validas = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14"]
+        while opcion not in opciones_validas:
+            print("Opción inválida. Por favor, introduce una de las opciones del menú.")
+            opcion = input("Elige una opción: ")
+
+        if opcion == "1":
+            respuesta=input("Elija como desea agregar libros a la repisa:"
+                            "\n a) Mediante lectura de archivo csv."
+                            "\n b) Mediante agregado manual (libro por libro)."
+                            "\n")
+            if respuesta.lower() == "a":
+                archivo=input("Escribe el nombre del archivo csv: ")
+                apilar_Archivo(Repisa1, archivo)
+            else:
+                titulo = input("Proporcione el título del libro: ")
+                autor = input("Proporcione el autor del libro: ")
+                editorial = input("Proporcione el editorial del libro: ")
+                anio = int(input("Proporcione el año de publicación del libro: "))
+                libro=crear_libro([titulo, autor, editorial, anio])
+                Repisa1.push(libro)
+            continue
+
+        elif opcion == "2":
+            respuesta = input("Elija como desea agregar libros a la repisa:"
+                              "\n a) Mediante lectura de archivo csv."
+                              "\n b) Mediante agregado manual (libro por libro).")
+            if respuesta.lower() == "a":
+                csv = input("Escribe el nombre del archivo csv: ")
+                apilar_Archivo(Repisa2, csv)
+            else:
+                titulo = input("Proporcione el título del libro: ")
+                autor = input("Proporcione el autor del libro: ")
+                editorial = input("Proporcione el editorial del libro: ")
+                anio = int(input("Proporcione el año de publicación del libro: "))
+                libro = crear_libro([titulo, autor, editorial, anio])
+                Repisa2.push(libro)
+
+
+        elif opcion == "3":
+            pass
+
+
+        elif opcion == "4":
+            pass
+
+
+        elif opcion == "5":
+            mostrar_librosPila(Repisa1)
+            mostrar_librosLista(Repisa2)
+            mostrar_librosLista(RepisaOrdenada)
+
+        elif opcion == "6":
+            pass
+
+
+        elif opcion == "7":
+            pass
+
+
+        elif opcion== "8":
+            pass
+
+
+        elif opcion == "9":
+            pass
+
+
+        elif opcion == "10":
+            pass
+
+
+        elif opcion == "11":
+            pass
+
+
+        elif opcion == "12":
+            pass
+
+        elif opcion == "13":
+            pass
+
+        elif opcion == "14":
+            "Gracias por usar la biblioteca R-2 Dato, ¡Hasta luego!"
+            break
+
+
+
