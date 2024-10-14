@@ -97,7 +97,7 @@ class Book:
     def __str__(self):
         """"
         """
-        print(self.__titulo, self.__autor, self.__editorial, self.__anio)
+        print(self.titulo) if self.__titulo else "0"
 
     def __hash__(self) -> int:
         """
@@ -149,4 +149,3 @@ class Book:
         """
         if isinstance(otro, Book):
             return self.editorial > otro.editorial
-
