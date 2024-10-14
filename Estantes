@@ -1,3 +1,37 @@
+from Book import *
+from Pila import *
+from csv import  *
+from ListaBookOrden import *
+from Scripts.Pila import Pila
+from rich.console import Console
+from rich.table import Table
+from rich.panel import Panel
+
+
+def crearLibro(fila):
+    """"
+     Crea un objeto book  a partir de los datos de una fila del archivo CSV.
+
+    Args:
+    fila (list): Una lista que contiene los datos de una fila del archivo CSV.
+
+    Returns:
+    Book, El objeto de contacto creado, o None si la fila está vacía.
+    """
+    try:
+        titulo = fila[0]
+        autor = fila[1]
+        editorial = fila[2]
+        anio = int(fila[3])
+        book = Book(titulo, autor, editorial, anio)
+
+        return book
+
+    except (ValueError, IndexError) as e:
+        print(f"Error al procesar la fila: {fila}")
+        print(f"Error: {e}")
+        return None  # Devolver None en caso de error
+
 def apilar_Archivo(Pila: Pila, archivo_csv):
     try:
         with open(archivo_csv, newline='', encoding='utf-8') as csvfile:
@@ -15,10 +49,10 @@ def mostrar_librosPila(Pila: Pila):
     it1=iter(Pila)
     while True:
         try:
-            next(Pila)
             print(next(it1))
         except StopIteration:
-            pass
+            break
+
 def mostrar_librosLista(Lista: Lista):
     it1=iter(Lista)
     while True:
@@ -26,7 +60,7 @@ def mostrar_librosLista(Lista: Lista):
             next(it1)
             print(next(it1))
         except StopIteration:
-            pass
+            break
 
 
 
@@ -81,12 +115,20 @@ if __name__=="__main__":
                 archivo=input("Escribe el nombre del archivo csv: ")
                 apilar_Archivo(Repisa1, archivo)
             else:
-                titulo = input("Proporcione el título del libro: ")
-                autor = input("Proporcione el autor del libro: ")
-                editorial = input("Proporcione el editorial del libro: ")
-                anio = int(input("Proporcione el año de publicación del libro: "))
-                libro=crear_libro([titulo, autor, editorial, anio])
-                Repisa1.push(libro)
+                while True:
+                    titulo = input("Proporcione el título del libro: ")
+                    autor = input("Proporcione el autor del libro: ")
+                    editorial = input("Proporcione el editorial del libro: ")
+                    anio = int(input("Proporcione el año de publicación del libro: "))
+                    libro=crearLibro([titulo, autor, editorial, anio])
+                    Repisa1.push(libro)
+                    continuar = input("¿Desea seguir agregando libros a la repisa 1? [S/N]")
+                    while continuar.lower() != "n" and continuar.lower() != "s":
+                        continuar = input("Por favor, escoja una opción válida.")
+                    if continuar.lower() == "s":
+                        pass
+                    else:
+                        break
             continue
 
         elif opcion == "2":
@@ -97,12 +139,20 @@ if __name__=="__main__":
                 csv = input("Escribe el nombre del archivo csv: ")
                 apilar_Archivo(Repisa2, csv)
             else:
-                titulo = input("Proporcione el título del libro: ")
-                autor = input("Proporcione el autor del libro: ")
-                editorial = input("Proporcione el editorial del libro: ")
-                anio = int(input("Proporcione el año de publicación del libro: "))
-                libro = crear_libro([titulo, autor, editorial, anio])
-                Repisa2.push(libro)
+                while True:
+                    titulo = input("Proporcione el título del libro: ")
+                    autor = input("Proporcione el autor del libro: ")
+                    editorial = input("Proporcione el editorial del libro: ")
+                    anio = int(input("Proporcione el año de publicación del libro: "))
+                    libro = crearLibro([titulo, autor, editorial, anio])
+                    Repisa2.push(libro)
+                    continuar = input("¿Desea seguir agregando libros a la repisa 2? [S/N]")
+                    while continuar.lower() != "n" and continuar.lower() != "s":
+                        continuar = input("Por favor, escoja una opción válida.")
+                    if continuar.lower() == "s":
+                        pass
+                    else:
+                        break
 
 
         elif opcion == "3":
@@ -114,9 +164,12 @@ if __name__=="__main__":
 
 
         elif opcion == "5":
-            mostrar_librosPila(Repisa1)
-            mostrar_librosLista(Repisa2)
-            mostrar_librosLista(RepisaOrdenada)
+            if Repisa1 is not None:
+                mostrar_librosPila(Repisa1)
+            if Repisa2 is not None:
+                mostrar_librosPila(Repisa2)
+            if RepisaOrdenada is not None:
+                mostrar_librosLista(RepisaOrdenada)
 
         elif opcion == "6":
             pass
@@ -151,6 +204,5 @@ if __name__=="__main__":
         elif opcion == "14":
             "Gracias por usar la biblioteca R-2 Dato, ¡Hasta luego!"
             break
-
 
 
