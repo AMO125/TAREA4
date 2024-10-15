@@ -80,6 +80,26 @@ def apilar_Archivo(Pila: Pila, archivo_csv):
     except FileNotFoundError:
         print(f"Error, no se encontró el archivo: {archivo_csv}")
 
+def guardar_archivo(lista:Lista, archivo_csv):
+    if not archivo_csv.endswith(".csv"):
+        archivo_csv += ".csv"
+    with open(archivo_csv, mode='w', newline='', encoding='utf-8') as csvfile:
+        escritor = csv.writer(csvfile)
+
+        # Agregar la fila de encabezados
+        encabezados = ["Título", "Autor", "Editorial", "Anio"]
+        escritor.writerow(encabezados)
+        it1=iter(Lista)
+        while True:
+            try:
+                next(it1)
+                if isinstance(next(it1), Book):
+                    escritor.writerow(
+                        ["Libro", next(it1).titulo, next(it1).autor, next(it1).editorial, next(it1).anio, "", "", ""])
+                    escritor.writerow(fila)
+            except StopIteration:
+                break
+
 if __name__=="__main__":
     Repisa1=Pila()
     Repisa2=Pila()
@@ -176,7 +196,8 @@ if __name__=="__main__":
 
 
         elif opcion == "4":
-            pass
+            archivoGuardar=input("Escribe el nombre del archivo csv: ")
+            guardar_archivo(RepisaOrdenada, archivoGuardar)
 
 
         elif opcion == "5":
@@ -186,6 +207,12 @@ if __name__=="__main__":
                 print(Repisa2)
             if RepisaOrdenada is not None:
                 print(RepisaOrdenada)
+                it1=iter(RepisaOrdenada)
+                while True:
+                    try:
+                        print(next(it1))
+                    except StopIteration:
+                        break
 
         elif opcion == "6":
             pass
@@ -291,11 +318,14 @@ if __name__=="__main__":
             pass
 
         elif opcion == "13":
-            pass
+            if Repisa1.esta_vacia() and Repisa2.esta_vacia() and RepisaOrdenada.esta_vacia():
+                print("La biblioteca está vacía.")
+            else:
+                print("La biblioteca no está vacía.")
+
 
         elif opcion == "14":
             "Gracias por usar la biblioteca R-2 Dato, ¡Hasta luego!"
             break
-
 
 
