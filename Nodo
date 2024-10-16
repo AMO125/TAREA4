@@ -16,10 +16,3 @@ class Nodo:
         elif len(params) == 2:
             self.elemento = params[0]
             self.siguiente = params[1]
-    @property
-    def elemento(self)->"T":
-        return self.__elemento
-    @elemento.setter
-    def elemento(self, elemento):
-        self.__elemento = elemento
-
