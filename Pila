@@ -1,5 +1,4 @@
 import csv
-
 import Apilable as p
 import Book as b
 import Nodo as n
@@ -106,11 +105,11 @@ class Pila(p.Apilable):
         """
         # Utilizando el iterador
         it1 = iter(self)
-        pila = "Pila: "
+        pila = ""
         try:
             while True:
                 elem = next(it1)
-                pila += str(elem) + ", "
+                pila += str(elem) + "; "
         except StopIteration:
             pass
         return pila
@@ -135,3 +134,33 @@ class Pila(p.Apilable):
             return a
         else:
             raise StopIteration
+
+    def tamanio(self):
+        """
+        Método que permite obtener el total de elementos de la pila
+        :return: El total de elementos de la pila
+        :rtype: int
+        """
+        tam=0
+        it1=iter(self)
+        while True:
+            try:
+                next(it1)
+                tam += 1
+            except StopIteration:
+                break
+        return tam
+
+    def repeticiones(self, elemento):
+        if self.contiene(elemento):
+            it1=iter(self)
+            repeticiones=0
+            while True:
+                try:
+                    if next(it1) == elemento:
+                        repeticiones += 1
+                except StopIteration:
+                    break
+            return repeticiones
+        else:
+            return 0
