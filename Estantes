@@ -160,16 +160,31 @@ if __name__=="__main__":
                             "b) Mediante agregado manual (libro por libro). \n"
                             "Elija como desea agregar libros a la repisa: ")
             while respuesta != "a" and respuesta != "b":
-                respuesta=input("Por favor, ingrese una opción válida")
+                respuesta=input("Por favor, ingrese una opción válida: ")
             if respuesta.lower() == "a":
-                archivo=input("Escribe el nombre del archivo csv: ")
+                archivo=input("Proporcione la ruta del archivo csv: ")
                 apilar_Archivo(Repisa1, archivo)
             elif respuesta.lower() == "b":
                 while True:
                     titulo = input("Proporcione el título del libro: ")
+                    while not titulo:
+                        titulo = input("Por favor, ingrese un título.")
                     autor = input("Proporcione el autor del libro: ")
+                    while not autor or not (all(x.isalpha() or x.isspace() for x in autor)):
+                        autor = input("Por favor, ingrese un autor válido: ")
                     editorial = input("Proporcione el editorial del libro: ")
-                    anio = int(input("Proporcione el año de publicación del libro: "))
+                    while not editorial:
+                        editorial = input("Por favor, ingrese una editorial.")
+                    while True:
+                        try:
+                            anio = int(input("Proporcione el año de publicación del libro: "))
+                            if anio <= 0 or anio > 2025:
+                                print("Por favor, agregue un año de publicación válido.")
+                                continue
+                            else:
+                                break
+                        except ValueError as e:
+                            print("Por favor, agregue un año de publicación válido.")
                     libro=crearLibro([titulo, autor, editorial, anio])
                     Repisa1.push(libro)
                     continuar = input("¿Desea seguir agregando libros a la repisa 1? [S/N]")
@@ -185,16 +200,31 @@ if __name__=="__main__":
                               "b) Mediante agregado manual (libro por libro).\n"
                               "Elija como desea agregar libros a la repisa: ")
             while respuesta != "a" and respuesta != "b":
-                respuesta = input("Por favor, ingrese una opción válida.")
+                respuesta = input("Por favor, ingrese una opción válida: ")
             if respuesta.lower() == "a":
-                archivo = input("Escribe el nombre del archivo csv: ")
+                archivo = input("Proporcione la ruta del archivo csv: ")
                 apilar_Archivo(Repisa2, archivo)
             elif respuesta.lower() == "b":
                 while True:
                     titulo = input("Proporcione el título del libro: ")
+                    while not titulo:
+                        titulo = input("Por favor, ingrese un título.")
                     autor = input("Proporcione el autor del libro: ")
+                    while not autor or not (all(x.isalpha() or x.isspace() for x in autor)):
+                        autor = input("Por favor, ingrese un autor válido: ")
                     editorial = input("Proporcione el editorial del libro: ")
-                    anio = int(input("Proporcione el año de publicación del libro: "))
+                    while not editorial:
+                        editorial = input("Por favor, ingrese una editorial.")
+                    while True:
+                        try:
+                            anio = int(input("Proporcione el año de publicación del libro: "))
+                            if anio <= 0 or anio > 2025:
+                                print("Por favor, agregue un año de publicación válido.")
+                                continue
+                            else:
+                                break
+                        except ValueError as e:
+                            print("Por favor, agregue un año de publicación válido.")
                     libro = crearLibro([titulo, autor, editorial, anio])
                     Repisa2.push(libro)
                     continuar = input("¿Desea seguir agregando libros a la repisa 2? [S/N]")
@@ -206,10 +236,25 @@ if __name__=="__main__":
                         break
 
         elif opcion == "3":
-            titulo = input("Ingresa el título del ejemplar que estás buscando: ")
-            autor = input("Ingresa el autor del libro que estás buscando: ")
-            editorial = input("Ingresa la editorial del libro: ")
-            anio = int(input("Ingresa el año de publicación de tu libro: "))
+            titulo = input("Ingrese el título del libro buscado: ")
+            while not titulo:
+                titulo = input("Por favor, ingrese un título.")
+            autor = input("Ingrese el autor del libro buscando: ")
+            while not autor or not (all(x.isalpha() or x.isspace() for x in autor)):
+                autor = input("Por favor, ingrese un autor válido: ")
+            editorial = input("Ingrese la editorial del libro buscado: ")
+            while not editorial:
+                print("Por favor, ingrese una editorial.")
+            while True:
+                try:
+                    anio = int(input("Proporcione el año de publicación del libro: "))
+                    if anio <= 0 or anio > 2025:
+                        print("Por favor, agregue un año de publicación válido.")
+                        continue
+                    else:
+                        break
+                except ValueError as e:
+                    print("Por favor, agregue un año de publicación válido.")
             librob = Book(titulo, autor, editorial, anio)
 
             if biblioteca_vacia(Repisa1, Repisa2, RepisaOrdenada):
@@ -223,35 +268,85 @@ if __name__=="__main__":
                 if Repisa2.contiene(librob):
                     print(f"La repisa 2 tiene {Repisa2.repeticiones(librob)} ejemplares del libro buscado.")
                 if RepisaOrdenada.contiene(librob):
-                    print(f"La repisa ordenada tiene {RepisaOrdenada.repeticiones(librob)} lbros")
+                    print(f"La repisa ordenada tiene {RepisaOrdenada.repeticiones(librob)} ejemplares del lbro buscado.")
 
         elif opcion == "4":
-            pass
+            if not Repisa1.esta_vacia() or not Repisa2.esta_vacia():
+                respuesta1 = input("Hay libros que no han sido colocados en la repisa ordenada ¿Desea continuar? [S/N]: ")
+                while not respuesta1.lower() == "s" and not respuesta1.lower() == "n":
+                    respuesta1 = ("Elija una respuesta válida [S/N]")
+                if respuesta1.lower() == "s":
+                    if RepisaOrdenada.esta_vacia():
+                        print("La repisa ordenada está vacía.")
+                    else:
+                        pass #Aquí guarda en csv
+            else:
+                if RepisaOrdenada.esta_vacia():
+                    print("La repisa ordenada está vacía.")
+                else:
+                    pass #Aquí guarda en csv
+
 
         elif opcion == "5":
-            titulo = input("Ingresa el título del ejemplar que quieres eliminar: ")
-            autor = input("Ingresa el autor del libro: ")
-            editorial = input("Ingresa la editorial del libro: ")
-            anio = input("Ingresa el año de publicación del libro: ")
-            libro_eliminar = book.Book(titulo, autor, editorial, anio)
-            if RepisaOrdenada.contiene(libro_eliminar):
-                RepisaOrdenada.eliminar(libro_eliminar)
-                print("El libro {} ha sido eliminado (1 vez) de la repisa ordenada".format(titulo))
+            if RepisaOrdenada.esta_vacia():
+                print("La repisa ordenada está vacía.")
             else:
-                print("El libro {} no se encuentra en la repisa ordenada".format(titulo))
+                titulo = input("Ingrese el título del libro a eliminar: ")
+                while not titulo:
+                    print("Por favor, ingrese un título.")
+                autor = input("Ingrese el autor del libro a eliminar: ")
+                while not autor or not (all(x.isalpha() or x.isspace() for x in autor)):
+                    autor = input("Por favor, ingrese un autor válido: ")
+                editorial = input("Ingrese la editorial del libro a eliminar: ")
+                while not editorial:
+                    print("Por favor, ingrese una editorial.")
+                while True:
+                    try:
+                        anio = int(input("Proporcione el año de publicación del libro: "))
+                        if anio <= 0 or anio > 2025:
+                            print("Por favor, agregue un año de publicación válido.")
+                            continue
+                        else:
+                            break
+                    except ValueError as e:
+                        print("Por favor, agregue un año de publicación válido.")
+                libro_eliminar = Book(titulo, autor, editorial, anio)
+                if RepisaOrdenada.contiene(libro_eliminar):
+                    RepisaOrdenada.eliminar(libro_eliminar)
+                    print("El libro {} ha sido eliminado (1 vez) de la repisa ordenada".format(titulo))
+                else:
+                    print("El libro {} no se encuentra en la repisa ordenada".format(titulo))
 
         elif opcion == "6":
-            titulo = input("Ingresa el título del ejemplar que quieres eliminar: ")
-            autor = input("Ingresa el autor del libro: ")
-            editorial = input("Ingresa la editorial del libro: ")
-            anio = input("Ingresa el año de publicación del libro: ")
-            libroaeliminar = book.Book(titulo, autor, editorial, anio)
-            if RepisaOrdenada.contiene(libroaeliminar):
-                while RepisaOrdenada.contiene(libroaeliminar):
-                    RepisaOrdenada.eliminar(libroaeliminar)
-                print("El libro {} ha sido eliminado completamente de la repisa ordenada".format(titulo))
+            if RepisaOrdenada.esta_vacia():
+                print("La repisa ordenada está vacía.")
             else:
-                print("El libro a eliminar no se encuentra en la repisa ordenada")
+                titulo = input("Ingrese el título del libro a eliminar: ")
+                while not titulo:
+                    print("Por favor, ingrese un título.")
+                autor = input("Ingrese el autor del libro a eliminar: ")
+                while not autor or not (all(x.isalpha() or x.isspace() for x in autor)):
+                    autor = input("Por favor, ingrese un autor válido: ")
+                editorial = input("Ingrese la editorial del libro a eliminar: ")
+                while not editorial:
+                    print("Por favor, ingrese una editorial.")
+                while True:
+                    try:
+                        anio = int(input("Proporcione el año de publicación del libro: "))
+                        if anio <= 0 or anio > 2025:
+                            print("Por favor, agregue un año de publicación válido.")
+                            continue
+                        else:
+                            break
+                    except ValueError as e:
+                        print("Por favor, agregue un año de publicación válido.")
+                libroaeliminar = Book(titulo, autor, editorial, anio)
+                if RepisaOrdenada.contiene(libroaeliminar):
+                    while RepisaOrdenada.contiene(libroaeliminar):
+                        RepisaOrdenada.eliminar(libroaeliminar)
+                    print("El libro {} ha sido eliminado completamente de la repisa ordenada".format(titulo))
+                else:
+                    print("El libro a eliminar no se encuentra en la repisa ordenada")
 
         elif opcion == "7":
             if not Repisa1.esta_vacia():
@@ -424,25 +519,25 @@ if __name__=="__main__":
                 if Repisa1.esta_vacia():
                     print("No hay libros en la repisa 1.")
                 else:
-                    print(f"La repisa 1 tiene {Repisa1.tamanio()} libros")
+                    print(f"La repisa 1 tiene {Repisa1.tamanio()} libros.")
                 if Repisa2.esta_vacia():
                     print("No hay libros en la repisa 2.")
                 else:
-                    print(f"La repisa 2 tiene {Repisa2.tamanio()} libros")
+                    print(f"La repisa 2 tiene {Repisa2.tamanio()} libros.")
                 if RepisaOrdenada.esta_vacia():
                     print("No hay libros en la repisa ordenada.")
                 else:
-                    print(f"La repisa ordenada tiene {RepisaOrdenada.tamanio()} lbros")
+                    print(f"La repisa ordenada tiene {RepisaOrdenada.tamanio()} lbros.")
 
         elif opcion == "17":
             if Repisa1.esta_vacia() and Repisa2.esta_vacia() and RepisaOrdenada.esta_vacia():
-                print("La biblioteca está vacía")
+                print("La biblioteca está vacía.")
             else:
-                print("La biblioteca no está vacía")
+                print("La biblioteca no está vacía.")
 
 
         elif opcion == "18":
-            "Gracias por usar la biblioteca R-2 Dato, ¡Hasta luego!"
+            print("Gracias por usar la biblioteca R-2 Dato, ¡Hasta luego!")
             break
 
         while True:
