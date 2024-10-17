@@ -150,7 +150,7 @@ class Lista(l.Listable):
         try:
             while True:
                 elem = next(it1)
-                lista += str(elem) + ","
+                lista += str(elem) + ";"
         except StopIteration:
             pass
         return lista
