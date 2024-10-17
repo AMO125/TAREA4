@@ -59,3 +59,96 @@ class Book:
         :return:
         """
         self.__titulo = titulo
+
+    @autor.setter
+    def autor(self, autor):
+        """
+        Método setter del parámetro autor
+        :param autor: El autor del libro
+        """
+        self.__autor = autor
+
+    @editorial.setter
+    def editorial(self, editorial):
+        """
+        Método setter del parámetro editorial
+        :param editorial: La editorial del libro
+        """
+        self.__editorial = editorial
+
+    @anio.setter
+    def anio(self, anio):
+        """
+        Método setter del parámetro anio
+        :param anio: El año de publicación del libro
+        """
+        self.__anio = anio
+
+    # Métodos calculadores
+
+    def __llave(self) -> tuple:
+        """
+        Método privado que permite definir una llave a través de los atributos del objeto
+        :return: Una tupla con los atributos del objeto.
+        :rtype: tuple
+        """
+        return self.__titulo, self.__autor, self.__editorial, self.__anio
+
+    def __str__(self):
+        """"
+        Metodo que indica la representación de un objeto de la clase Book como string.
+        :return: Una cadena que corresponde a los atributos del objeto
+        :rtype: str
+        """
+        return (f"{self.titulo} de {self.autor} ({self.anio}): {self.editorial}") if self.__titulo and self.__autor and self.__anio else "0"
+
+    def __hash__(self) -> int:
+        """
+        Método que internamente llama la función hash() para obtener el valor hash del objeto.
+        :return: Un valor entero que corresponde al valor hash del objeto
+        :rtype: int
+        """
+        return hash(self.__llave())
+
+    def __eq__(self, otro) -> bool:
+        """
+        Método que permite definir el criterio de igualdad para dos objetos
+        :param otro: El libro con la que se va a realizar la comparación
+        :return: True si los libros son iguales, False en caso contrario
+        :rtype: bool
+        """
+        if isinstance(otro, Book):
+            return self.__llave() == otro.__llave()
+
+    def __gt__titulo(self, otro) -> bool:
+        """
+        Este método se utiliza para dos libros y determinar si
+        el primero es "mayor" que el segundo en cuanto a su título.
+        :param otro: El libro con la que se va a realizar la comparación
+        :return: True si el libro actual es mayor que otro, False en caso contrario
+        :rtype: bool
+        """
+        if isinstance(otro, Book):
+            return self.titulo > otro.titulo
+
+    def __gt__autor(self, otro) -> bool:
+        """
+        Este método se utiliza para dos libros y determinar si
+        el primero es "mayor" que el segundo en cuanto a su autor.
+        :param otro: El libro con la que se va a realizar la comparación
+        :return: True si el libro actual es mayor que otro, False en caso contrario
+        :rtype: bool
+        """
+        if isinstance(otro, Book):
+            return self.autor > otro.autor
+
+    def __gt__editorial(self, otro) -> bool:
+        """
+        Este método se utiliza para dos libros y determinar si
+        el primero es "mayor" que el segundo en cuanto a su editorial.
+        :param otro: El libro con la que se va a realizar la comparación
+        :return: True si el libro actual es mayor que otro, False en caso contrario
+        :rtype: bool
+        """
+        if isinstance(otro, Book):
+            return self.editorial > otro.editorial
