@@ -62,11 +62,11 @@ def crearLibro(fila):
     """"
      Crea un objeto book  a partir de los datos de una fila del archivo CSV.
 
-    Args:
-    fila (list): Una lista que contiene los datos de una fila del archivo CSV.
+    Args:fila (list): Una lista que contiene los datos de una fila del archivo CSV.
 
-    Returns:
-    Book, El objeto de contacto creado, o None si la fila está vacía.
+    Returns: Book, El objeto de contacto creado, o None si la fila está vacía.
+    
+    Rtype: Book
     """
     try:
         titulo = fila[0]
@@ -87,6 +87,11 @@ def crearLibro(fila):
         return None  # Devolver None en caso de error
 
 def apilar_Archivo(Pila: Pila, archivo_csv):
+    """"
+    Función que realiza la lectura de un archivo y lo agrega a una pila.
+    :args: Pila, csv
+    :returns None
+    """
     try:
         with open(archivo_csv, newline='', encoding='utf-8') as csvfile:
             lector = csv.reader(csvfile)
@@ -100,6 +105,12 @@ def apilar_Archivo(Pila: Pila, archivo_csv):
         print(f"Error, no se encontró el archivo: {archivo_csv}")
 
 def biblioteca_vacia(Pila1: Pila, Pila2: Pila, Lista1: Lista):
+    """
+    Función que indica si la biblioteca formada por dos pilas y una lista está vacía.
+    :Args: Pila1, Pila2, Lista1
+    :returns True, False
+    :rtype: bool
+    """
     if Pila1.esta_vacia() and Pila2.esta_vacia() and Lista1.esta_vacia():
         return True
     else:
@@ -107,6 +118,12 @@ def biblioteca_vacia(Pila1: Pila, Pila2: Pila, Lista1: Lista):
 
 
 def ingresar_libro():
+    """"
+    Función que solicita al usuario los datos de un libro, con sus respectivas excepciones.
+    :Args: None
+    :returns: Libro
+    :rtype: Book
+    """
     titulo = input("Proporcione el título del libro: ")
     while not titulo:
         titulo = input("Por favor, ingrese un título.")
