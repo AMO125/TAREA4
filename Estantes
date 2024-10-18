@@ -2,8 +2,6 @@ from Book import *
 from Pila import *
 from csv import  *
 from ListaBookOrden import *
-from Pila import Pila
-from Scripts.ListaBookOrden import Lista
 from rich.console import Console
 from rich.table import Table
 from rich.panel import Panel
