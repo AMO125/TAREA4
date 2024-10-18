@@ -73,9 +73,13 @@ def crearLibro(fila):
         autor = fila[1]
         editorial = fila[2]
         anio = int(fila[3])
-        book = Book(titulo, autor, editorial, anio)
-
-        return book
+        if titulo and autor and editorial and anio:
+            book = Book(titulo, autor, editorial, anio)
+            return book
+        else:
+            print(f"Error al procesar la fila: {fila}")
+            print(f"Datos faltantes")
+            return None
 
     except (ValueError, IndexError) as e:
         print(f"Error al procesar la fila: {fila}")
@@ -92,11 +96,8 @@ def apilar_Archivo(Pila: Pila, archivo_csv):
                 if libro is not None:
                     Pila.push(libro)
                     print(f"Libro agregado: {libro}")
-    except FileNotFoundError:
+    except (FileNotFoundError, PermissionError):
         print(f"Error, no se encontró el archivo: {archivo_csv}")
-
-    except Exception:
-        print("Ocurrió un error al intentar leer el archivo CSV, inténtelo de nuevo.")
 
 def biblioteca_vacia(Pila1: Pila, Pila2: Pila, Lista1: Lista):
     if Pila1.esta_vacia() and Pila2.esta_vacia() and Lista1.esta_vacia():
@@ -277,12 +278,24 @@ if __name__=="__main__":
                     if RepisaOrdenada.esta_vacia():
                         print("La repisa ordenada está vacía.")
                     else:
-                        pass #Aquí guarda en csv
+                        nombre_archivo = input("Ingrese el nombre del archivo CSV: ")
+                        with open(nombre_archivo + ".csv", 'w', newline='', encoding='utf-8') as archivo_csv:
+                            escritor_csv = csv.writer(archivo_csv)
+                            escritor_csv.writerow(["Título", "Autor", "Editorial", "Año"])  # Encabezado
+                            for libro in RepisaOrdenada:
+                                escritor_csv.writerow([libro.titulo, libro.autor, libro.editorial, libro.anio])
+                        print(f"Repisa ordenada guardada en {nombre_archivo}.csv") #Aquí guarda en csv
             else:
                 if RepisaOrdenada.esta_vacia():
                     print("La repisa ordenada está vacía.")
                 else:
-                    pass #Aquí guarda en csv
+                    nombre_archivo = input("Ingrese el nombre del archivo CSV: ")
+                    with open(nombre_archivo + ".csv", 'w', newline='', encoding='utf-8') as archivo_csv:
+                        escritor_csv = csv.writer(archivo_csv)
+                        escritor_csv.writerow(["Título", "Autor", "Editorial", "Año"])  # Encabezado
+                        for libro in RepisaOrdenada:
+                            escritor_csv.writerow([libro.titulo, libro.autor, libro.editorial, libro.anio])
+                    print(f"Repisa ordenada guardada en {nombre_archivo}.csv") #Aquí guarda en csv
 
 
         elif opcion == "5":
